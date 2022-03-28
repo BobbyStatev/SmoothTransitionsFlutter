@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyNavigator {
-  void push(
+  static void push(
     BuildContext context, {
     required Widget toScreen,
     required bool fullscreenDialog,

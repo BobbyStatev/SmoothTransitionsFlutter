@@ -48,7 +48,7 @@ class FirstPage extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              MyNavigator().push(
+              MyNavigator.push(
                 context,
                 toScreen: const SecondScreen(),
                 fullscreenDialog: Provider.of<FullscreenDialogNotifier>(context,
