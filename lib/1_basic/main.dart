@@ -6,8 +6,15 @@ import 'page.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => PlatformNotifier(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => PlatformNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FullscreenDialogNotifier(),
+        )
+      ],
       child: const MyApp(),
     ),
   );
