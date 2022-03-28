@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        platform: TargetPlatform.android,
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -37,6 +38,12 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
     });
+  }
+
+  Route _useNativeRoute(Widget toScreen) {
+    return MaterialPageRoute(
+      builder: (context) => toScreen,
+    );
   }
 
   Route _createRoute(Widget toScreen) {
@@ -122,6 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
+            const TextField(),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
@@ -129,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
             TextButton(
               onPressed: () => Navigator.push(
                 context,
-                _createRoute(const SecondScreen()),
+                _useNativeRoute(const SecondScreen()),
               ),
               child: const Text('To second screen'),
             )
