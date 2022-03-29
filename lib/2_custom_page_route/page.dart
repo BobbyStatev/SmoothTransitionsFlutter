@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinbox/flutter_spinbox.dart';
 
-import '../second_screen.dart';
+import '../common/duration_spin_tile.dart';
+import '../common/second_page.dart';
 import 'navigator.dart';
 
 class FirstPage extends StatefulWidget {
@@ -45,45 +45,27 @@ class _FirstPageState extends State<FirstPage> {
               usePageRouteBuilder = (value == 0);
             },
           ),
-          ListTile(
-            title: const Text('Forward duration'),
-            trailing: SizedBox(
-              width: 140,
-              child: SpinBox(
-                min: 0,
-                max: 2000,
-                value: 500,
-                step: 100,
-                onChanged: (value) => forwardDuration = value.toInt(),
-              ),
-            ),
+          DurationSpinTile(
+            titleText: 'Forward duration (in milliseconds)',
+            onChanged: (value) => forwardDuration = value.toInt(),
           ),
-          ListTile(
-            title: const Text('Backward duration'),
-            trailing: SizedBox(
-              width: 140,
-              child: SpinBox(
-                min: 0,
-                max: 2000,
-                value: 500,
-                step: 100,
-                onChanged: (value) => backwardDuration = value.toInt(),
-              ),
-            ),
+          DurationSpinTile(
+            titleText: 'Backward duration (in milliseconds)',
+            onChanged: (value) => backwardDuration = value.toInt(),
           ),
           ElevatedButton(
             onPressed: () {
               if (usePageRouteBuilder) {
                 MyNavigator.pushUsingPageRouteBuilder(
                   context,
-                  toScreen: const SecondScreen(),
+                  toScreen: const SecondPage(),
                   forwardDurationInMilliseconds: forwardDuration,
                   backwardDurationInMilliseconds: backwardDuration,
                 );
               } else {
                 MyNavigator.pushUsingCustomPageRoute(
                   context,
-                  toScreen: const SecondScreen(),
+                  toScreen: const SecondPage(),
                   forwardDurationInMilliseconds: forwardDuration,
                   backwardDurationInMilliseconds: backwardDuration,
                 );

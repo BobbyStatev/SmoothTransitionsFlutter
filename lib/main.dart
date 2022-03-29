@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_transitions/second_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:smooth_transitions/1_basic/page.dart' as page1;
+import 'package:smooth_transitions/2_custom_page_route/page.dart' as page2;
+import 'package:smooth_transitions/3_build_in_transitions/page.dart' as page3;
+import 'package:smooth_transitions/4_hero/page.dart' as page4;
+import 'package:smooth_transitions/5_transitions_combination/page.dart'
+    as page5;
+import 'package:smooth_transitions/6_create_transition/page.dart' as page6;
+
+import '1_basic/notifier.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => PlatformNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FullscreenDialogNotifier(),
+        )
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,143 +33,96 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Smooth transitions in Flutter',
       theme: ThemeData(
-        platform: TargetPlatform.android,
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const RootPage(title: 'Smooth transitions in Flutter'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class RootPage extends StatelessWidget {
+  const RootPage({Key? key, required this.title}) : super(key: key);
 
   final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  Route _useNativeRoute(Widget toScreen) {
-    return MaterialPageRoute(
-      builder: (context) => toScreen,
-    );
-  }
-
-  Route _createRoute(Widget toScreen) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => toScreen,
-      transitionDuration: const Duration(milliseconds: 2000),
-      reverseTransitionDuration: const Duration(milliseconds: 2000),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final Tween<double> doubleTween = Tween<double>(begin: 1.0, end: 0.0);
-        final Animation<double> animDouble =
-            doubleTween.animate(secondaryAnimation);
-        final fadeTransition =
-            FadeTransition(opacity: animDouble, child: child);
-
-        const begin = Offset(-1, 0);
-        const end = Offset.zero;
-        const curve = Curves.bounceInOut;
-
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-        // return FadeTransition(
-        //   opacity: animation,
-        //   child: child,
-        // );
-        // return SlideTransition(
-        //   position: animation.drive(tween),
-        //   child: child,
-        // );
-        // return RotationTransition(
-        //   turns: animation,
-        //   child: fadeTransition,
-        // );
-
-        return ScaleTransition(
-          scale: Tween<double>(
-            begin: 0.0,
-            end: 1.0,
-          ).animate(
-            CurvedAnimation(
-              parent: animation,
-              curve: const Interval(
-                0.00,
-                0.50,
-                curve: Curves.bounceInOut,
-              ),
-            ),
-          ),
-          child: ScaleTransition(
-            scale: Tween<double>(
-              begin: 1.5,
-              end: 1.0,
-            ).animate(
-              CurvedAnimation(
-                parent: animation,
-                curve: const Interval(
-                  0.50,
-                  1.00,
-                  curve: Curves.linear,
-                ),
-              ),
-            ),
-            child: SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            ),
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            const TextField(),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            TextButton(
-              onPressed: () => Navigator.push(
-                context,
-                _useNativeRoute(const SecondScreen()),
+      body: ListView(
+        children: [
+          ListTile(
+            title: const Text('1. Basic'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const page1.FirstPage(
+                  title: '1. Basic',
+                ),
               ),
-              child: const Text('To second screen'),
-            )
-          ],
-        ),
+            ),
+          ),
+          ListTile(
+            title: const Text('2. Custom Page Route'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const page2.FirstPage(
+                  title: '2. Custom Page Route',
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: const Text('3. Build in transitions'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const page3.FirstPage(
+                  title: '3. Build in transitions',
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: const Text('4. Hero'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const page4.FirstPage(
+                  title: '4. Hero',
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: const Text('5. Transition combinations'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const page5.FirstPage(
+                  title: '5. Transition combinations',
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: const Text('6. Create transition'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const page6.FirstPage(
+                  title: '6. Create transition',
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

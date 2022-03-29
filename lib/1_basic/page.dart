@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_transitions/1_basic/navigator.dart';
-import 'package:smooth_transitions/second_screen.dart';
+import 'package:smooth_transitions/common/second_page.dart';
 import 'notifier.dart';
 
 class FirstPage extends StatelessWidget {
@@ -50,7 +50,7 @@ class FirstPage extends StatelessWidget {
             onPressed: () {
               MyNavigator.push(
                 context,
-                toScreen: const SecondScreen(),
+                toScreen: const SecondPage(),
                 fullscreenDialog: Provider.of<FullscreenDialogNotifier>(context,
                         listen: false)
                     .isSelected,
