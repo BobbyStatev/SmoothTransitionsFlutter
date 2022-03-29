@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const FirstPage(title: '3. Build in moves'),
+      home: const FirstPage(title: '4. Hero'),
     );
   }
 }

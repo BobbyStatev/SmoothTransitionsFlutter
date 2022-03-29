@@ -7,6 +7,7 @@ import 'package:smooth_transitions/4_hero/page.dart' as page4;
 import 'package:smooth_transitions/5_transitions_combination/page.dart'
     as page5;
 import 'package:smooth_transitions/6_create_transition/page.dart' as page6;
+import 'package:smooth_transitions/7_gesture_transition/page.dart' as page7;
 
 import '1_basic/notifier.dart';
 
@@ -36,6 +37,8 @@ class MyApp extends StatelessWidget {
       title: 'Smooth transitions in Flutter',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        platform:
+            Provider.of<PlatformNotifier>(context, listen: true).targetPlatform,
       ),
       home: const RootPage(title: 'Smooth transitions in Flutter'),
     );
@@ -117,6 +120,17 @@ class RootPage extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => const page6.FirstPage(
                   title: '6. Create transition',
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: const Text('7. Transition from gesture'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const page7.FirstPage(
+                  title: '7. Transition from gesture',
                 ),
               ),
             ),
